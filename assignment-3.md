@@ -11,10 +11,6 @@ output:
 
 
 
-# Executive Summary
-
-The main goal is to 
-
 
 # Loading the Data
 
@@ -189,14 +185,14 @@ mdl
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 7
 ## 
-##         OOB estimate of  error rate: 0.28%
+##         OOB estimate of  error rate: 0.26%
 ## Confusion matrix:
 ##      A    B    C    D    E class.error
 ## A 3906    0    0    0    0 0.000000000
-## B    7 2650    1    0    0 0.003009782
-## C    0   12 2384    0    0 0.005008347
-## D    0    0   11 2240    1 0.005328597
-## E    0    0    0    7 2518 0.002772277
+## B    4 2653    1    0    0 0.001881114
+## C    0    8 2386    2    0 0.004173623
+## D    0    0   15 2236    1 0.007104796
+## E    0    0    0    5 2520 0.001980198
 ```
 
 
@@ -215,7 +211,7 @@ out_of_sample_error
 ```
 
 ```
-## [1] 0.1699235
+## [1] 0.3398471
 ```
 
 

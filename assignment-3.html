@@ -370,10 +370,6 @@ summary {
 </div>
 
 
-<div id="executive-summary" class="section level1">
-<h1>Executive Summary</h1>
-<p>The main goal is to</p>
-</div>
 <div id="loading-the-data" class="section level1">
 <h1>Loading the Data</h1>
 <p>The data is loaded from the files and NA values are removed and also near zero values are removed. The data which is not needed is neglected.</p>
@@ -484,14 +480,14 @@ mdl</code></pre>
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 7
 ## 
-##         OOB estimate of  error rate: 0.28%
+##         OOB estimate of  error rate: 0.26%
 ## Confusion matrix:
 ##      A    B    C    D    E class.error
 ## A 3906    0    0    0    0 0.000000000
-## B    7 2650    1    0    0 0.003009782
-## C    0   12 2384    0    0 0.005008347
-## D    0    0   11 2240    1 0.005328597
-## E    0    0    0    7 2518 0.002772277</code></pre>
+## B    4 2653    1    0    0 0.001881114
+## C    0    8 2386    2    0 0.004173623
+## D    0    0   15 2236    1 0.007104796
+## E    0    0    0    5 2520 0.001980198</code></pre>
 <div id="calculating-accuracy-of-model" class="section level2">
 <h2>Calculating Accuracy of Model</h2>
 <pre class="r"><code>validatPredict &lt;- predict(mdl, trainDataY)
@@ -500,7 +496,7 @@ conf_table &lt;- conf_matrix$table
 validation_accuracy &lt;- (sum(diag(conf_table))/sum(conf_table)) * 100
 out_of_sample_error &lt;- 100 - validation_accuracy
 out_of_sample_error</code></pre>
-<pre><code>## [1] 0.1699235</code></pre>
+<pre><code>## [1] 0.3398471</code></pre>
 </div>
 </div>
 <div id="testing-the-model" class="section level1">

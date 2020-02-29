@@ -11,10 +11,6 @@ output:
 
 
 
-# Executive Summary
-
-The main goal is to 
-
 
 # Loading the Data
 
