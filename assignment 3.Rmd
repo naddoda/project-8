@@ -1,0 +1,103 @@
+---
+title: "Device Type Prediction"
+author: "Nada Hossam"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+  word_document: default
+---
+
+
+
+# Executive Summary
+
+The main goal is to 
+
+
+# Loading the Data
+
+
+```{r}
+
+library(caret)
+library(kernlab)
+
+trainData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-training.csv", sep = ",")
+
+testData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-testing.csv", sep = ",")
+
+table(trainData$classe)
+
+```
+
+The graph displays the mpg with respect to the type of car (automatic / manual)
+
+```{r}
+
+mdlda <- train(classe ~ ., data = trainData, method = "lda", na.action = na.pass)
+plda <- predict(mdlda, testData)
+plda
+
+mdnb <- train(classe ~ ., data = trainData, method = "nb", na.action = na.pass)
+pnb <- predict(mdnb, testData)
+pnb
+
+```
+
+
+
+# Data Analysis
+
+
+## Student's t-test 
+
+```{r}
+
+#library(datasets)
+
+#mdlda <- train(Species ~ ., data = iris, method = "lda")
+#plda <- predict(mdlda, iris)
+#plda
+
+#mdnb <- train(Species ~ ., data = iris, method = "nb")
+#pnb <- predict(mdnb, iris)
+#pnb
+
+
+```
+
+
+## Regression Model
+
+```{r}
+
+
+
+```
+
+
+## Multivariate Model
+
+```{r}
+
+
+
+```
+
+
+
+# Results
+
+
+## Is an automatic or manual transmission better for MPG?
+
+Manual transmission is better for mpg.
+
+
+## The MPG difference between automatic and manual transmissions
+
+Cars with manual transmissions have 2.94 more mpg compared to automatic ones.
+
+
