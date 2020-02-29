@@ -18,86 +18,73 @@ The main goal is to
 
 # Loading the Data
 
+The data is loaded from the files and NA values are removed and also near zero values are removed. The data which is not needed is neglected.
 
 ```{r}
 
 library(caret)
-library(kernlab)
+library(randomForest)
 
-trainData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-training.csv", sep = ",")
+trainData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-training.csv", sep = ",", na.strings = c("NA", ""))
 
-testData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-testing.csv", sep = ",")
+testData <- read.csv("E:/Nada/Others/Courses/Data Science Specialization/Ex/Course 8/pml-testing.csv", sep = ",", na.strings = c("NA", ""))
 
+trainData[1:5] <- NULL
+testData[1:5] <- NULL
+dim(trainData)
+
+na_cols <- colSums(is.na(trainData)) > nrow(trainData) * 0.7
+trainData <- trainData[!na_cols]
+testData <- testData[!na_cols]
+
+nsv <- nearZeroVar(trainData)
+trainData <- trainData[-nsv]
+testData <- testData[-nsv]
+
+str(trainData)
 table(trainData$classe)
 
 ```
 
-The graph displays the mpg with respect to the type of car (automatic / manual)
+
+
+# Building the Model
+
 
 ```{r}
 
-mdlda <- train(classe ~ ., data = trainData, method = "lda", na.action = na.pass)
-plda <- predict(mdlda, testData)
-plda
+in_train <- createDataPartition(y = trainData$classe, p = 0.7, list = FALSE)
+trainDataX <- trainData[in_train, ]
+trainDataY <- trainData[-in_train, ]
 
-mdnb <- train(classe ~ ., data = trainData, method = "nb", na.action = na.pass)
-pnb <- predict(mdnb, testData)
-pnb
+mdl <- randomForest(classe ~ ., data = trainDataX)
+mdl
 
 ```
 
 
 
-# Data Analysis
+## Calculating Accuracy of Model
 
-
-## Student's t-test 
 
 ```{r}
 
-#library(datasets)
-
-#mdlda <- train(Species ~ ., data = iris, method = "lda")
-#plda <- predict(mdlda, iris)
-#plda
-
-#mdnb <- train(Species ~ ., data = iris, method = "nb")
-#pnb <- predict(mdnb, iris)
-#pnb
-
+validatPredict <- predict(mdl, trainDataY)
+conf_matrix <- confusionMatrix(validatPredict, trainDataY$classe)
+conf_table <- conf_matrix$table
+validation_accuracy <- (sum(diag(conf_table))/sum(conf_table)) * 100
+out_of_sample_error <- 100 - validation_accuracy
+out_of_sample_error
 
 ```
 
 
-## Regression Model
+# Testing the Model
 
 ```{r}
 
-
-
-```
-
-
-## Multivariate Model
-
-```{r}
-
-
+prediction <- predict(mdl, testData)
+prediction
 
 ```
-
-
-
-# Results
-
-
-## Is an automatic or manual transmission better for MPG?
-
-Manual transmission is better for mpg.
-
-
-## The MPG difference between automatic and manual transmissions
-
-Cars with manual transmissions have 2.94 more mpg compared to automatic ones.
-
 
